@@ -1,3 +1,4 @@
+from botToken import botToken
 import discord
 from discord import app_commands
 
@@ -27,3 +28,4 @@ async def hello(interaction:discord.Interaction):
 async def soma(interaction:discord.Interaction, num1:int, num2:int):
     await interaction.response.send_message(f"A soma de {num1} e {num2} é {num1+num2} burro 0-0")
 
+bot.run(botToken._token)
