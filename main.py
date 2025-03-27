@@ -1,31 +1,21 @@
+import os
 from botToken import botToken
 import discord
-from discord import app_commands
+from discord.ext import commands
 
-class LeonardoTrue(discord.Client):
-    def __init__(self):
-        intents = discord.Intents.all()
-        super().__init__(command_prefix = ",", intents = intents)
-        self.tree = app_commands.CommandTree(self)
 
-    async def setup_hook(self):
-        await self.tree.sync()
-    
-    async def on_ready(self):
-        print(f"{self.user} Ta On")
+intents = discord.Intents.all()
+bot = commands.Bot(command_prefix = "..", intents = intents)
 
-bot = LeonardoTrue()
+async def carregar_cogs():
+    for arquivo in os.listdir("Funções"):
+        if arquivo.endswith(".py"):
+            await bot.load_extension(f"Funções.{arquivo[:-3]}")
 
-@bot.tree.command(name = "hello", description = "Primeiro comando ,-,")
-async def hello(interaction:discord.Interaction):
-    await interaction.response.send_message(f"Hello, {interaction.user.mention}")
-
-@bot.tree.command(name = "soma", description = "Matematica basica ,-,")
-@app_commands.describe(
-    num1 = "Primeiro número",
-    num2 = "Segundo número"
-)
-async def soma(interaction:discord.Interaction, num1:int, num2:int):
-    await interaction.response.send_message(f"A soma de {num1} e {num2} é {num1+num2} burro 0-0")
+@bot.event
+async def on_ready():
+    await carregar_cogs()
+    await bot.tree.sync()
+    print(f"{bot.user} Ta On")
 
 bot.run(botToken._token)
