@@ -1,5 +1,7 @@
 {
     "python.analysis.extraPaths": [
-        "./Funções"
+        "./Funções",
+        "./Funções/musica",
+        "./Funções/ui/musica"
     ]
 }
