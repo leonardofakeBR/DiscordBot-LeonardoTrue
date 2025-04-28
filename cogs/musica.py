@@ -9,6 +9,7 @@ from Funções.musica.exit import exit
 from Funções.musica.pause import pause
 from Funções.musica.resume import resume
 from Funções.musica.skip import skip
+from Funções.musica.loop import loop
 
 class Musica(commands.Cog):
     def __init__(self, bot):
@@ -27,15 +28,17 @@ class Musica(commands.Cog):
     async def slash_pause(self, interaction: discord.Interaction):
         await pause(interaction)
 
-
     @app_commands.command(name="resume", description="Bora continuar ._.")
     async def slash_resume(self, interaction:discord.Interaction):
         await resume(interaction)
 
-
     @app_commands.command(name="exit", description="Quer privacidade é?")
     async def slash_exit(self, interaction:discord.Interaction):
         await exit(interaction)
+
+    @app_commands.command(name="loop", description="Ao infinito e além 0-0")
+    async def slash_loop(self, interaction:discord.Interaction):
+        await loop(interaction)
 
 async def setup(bot):
     await bot.add_cog(Musica(bot))

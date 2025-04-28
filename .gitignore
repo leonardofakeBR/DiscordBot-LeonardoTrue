@@ -1,3 +1,8 @@
 botToken.py
 __pycache__/botToken.cpython-313.pyc
 Funções/__pycache__/musica.cpython-313.pyc
+/Funções/ui/musica/__pycache__
+/Funções/musica/__pycache__
+*.pyc
+*.pyc
+/Funções/musica/__pycache__

@@ -7,7 +7,7 @@ from collections import deque
 
 from Funções.global_vars import songs_queues, now_music
 
-async def exit(interaction: discord.Interaction):
+async def exit(interaction:discord.Interaction):
     voice_client = interaction.guild.voice_client
 
     # Check if the bot is in a voice channel

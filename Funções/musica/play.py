@@ -5,6 +5,7 @@ import yt_dlp
 import asyncio
 from collections import deque
 from Funções.ui.musica import buttons
+from Funções.ui.musica import search_embed
 
 from Funções.global_vars import songs_queues, now_music
 
@@ -22,7 +23,7 @@ async def play(self, interaction:discord.Interaction, musica:str, loop:bool):
         voice_client = await discord.VoiceChannel.connect(voice_channel)
 
     elif voice_channel != voice_client.channel:
-        await discord.VoiceChannel.move_to(voice_channel)
+        await discord.VoiceClient.move_to(voice_channel)
 
     ydl_options = {
         "format": "bestaudio[abr<=96]/bestaudio",
@@ -43,7 +44,13 @@ async def play(self, interaction:discord.Interaction, musica:str, loop:bool):
     first_track = tracks[0]
     audio_url = first_track["url"]
     title = first_track.get("title", "Untitled")
+    duration = first_track["duration"]
+    thumbnail = first_track["thumbnail"]
     guild_id = str(interaction.guild_id)
+    user_avatar = interaction.user.avatar.url
+    user_name = interaction.user.name
+    embed = search_embed.search_embed(user_avatar, user_name, title,thumbnail,duration)
+    await interaction.followup.send(embed=embed)
 
     if songs_queues.get(guild_id) is None:
         songs_queues[guild_id] = deque()
@@ -89,6 +96,7 @@ async def play_next_song(bot, voice_client, guild_id, channel):
 
         #await voice_client.disconnect()
         songs_queues[guild_id] = deque()
+        now_music[guild_id] = 0
 
 async def search_ytdlp_async(query, ydl_opts):
     loop = asyncio.get_running_loop()
